@@ -13,19 +13,38 @@ from flask import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 # ==========================================
 # 1. CONFIGURATION
 # ==========================================
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-change-me")
+
+# Secret key for session security
+app.config["SECRET_KEY"] = os.environ.get(
+    "SECRET_KEY",
+    "dev-only-change-me"
+)
+
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
+# Project directory
 BASE_DIR = Path(__file__).resolve().parent
-DATABASE = BASE_DIR / "database.db"
 
-HOURS_GOAL = 20   # volunteer hours goal shown on the volunteer dashboard
+# Database location
+# Local computer: database.db
+# Render: /var/data/database.db
+DATABASE = Path(
+    os.environ.get(
+        "DATABASE_PATH",
+        str(BASE_DIR / "database.db")
+    )
+)
+
+# Create database directory if it doesn't exist
+DATABASE.parent.mkdir(parents=True, exist_ok=True)
+
+# Volunteer hours target
+HOURS_GOAL = 20
 
 
 # ==========================================
