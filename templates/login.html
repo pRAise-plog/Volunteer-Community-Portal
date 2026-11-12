@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Volunteer Community Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --green: #174E46;
+            --green-dark: #103B35;
+            --gold: #D6B66A;
+            --gold-dark: #A27D2D;
+            --cream: #FAF9F5;
+            --text: #283B36;
+            --muted: #687870;
+            --border: #D7E2DB;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--cream);
+        }
+
+        /* LEFT: BRAND PANEL */
+        .brand-panel {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 48px 56px;
+            color: #fff;
+            background: linear-gradient(150deg, var(--green-dark), var(--green));
+        }
+
+        .brand-panel::before,
+        .brand-panel::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(214, 182, 106, 0.25);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .brand-panel::before { width: 420px; height: 420px; right: -140px; top: -120px; }
+        .brand-panel::after  { width: 300px; height: 300px; left: -100px; bottom: -90px; }
+
+        .brand {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            background: var(--gold);
+            color: var(--green-dark);
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .brand-text {
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+        .brand-text small {
+            display: block;
+            margin-top: 3px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #C0D4C9;
+        }
+
+        .brand-copy { position: relative; max-width: 440px; }
+
+        .brand-copy .eyebrow {
+            display: block;
+            margin-bottom: 16px;
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+        }
+
+        .brand-copy h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 3.4vw, 46px);
+            line-height: 1.18;
+            margin-bottom: 18px;
+        }
+        .brand-copy h2 span { color: var(--gold); }
+
+        .brand-copy p {
+            color: #D7E6DE;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .brand-foot {
+            position: relative;
+            color: #C0D4C9;
+            font-size: 13px;
+        }
+
+        /* RIGHT: FORM PANEL */
+        .form-panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+        }
+
+        .login-box { width: min(430px, 100%); }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--green);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .back-link:hover { color: var(--gold-dark); }
+
+        .login-box .eyebrow {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--gold-dark);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+        }
+
+        .login-box h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            line-height: 1.2;
+            color: var(--green-dark);
+            margin-bottom: 10px;
+        }
+
+        .login-box .lead {
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .rule {
+            width: 56px;
+            height: 3px;
+            margin-bottom: 24px;
+            border-radius: 2px;
+            background: var(--gold);
+        }
+
+        .form-message {
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .form-message.success { color: #175C36; background: #E3F5E9; border: 1px solid #BDE4CA; }
+        .form-message.error   { color: #8A2828; background: #FCEAEA; border: 1px solid #F2C7C7; }
+
+        form label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--green-dark);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .field { position: relative; margin-bottom: 20px; }
+
+        .field input {
+            width: 100%;
+            height: 50px;
+            padding: 0 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff;
+            color: var(--text);
+            font: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .field input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(23, 78, 70, 0.12);
+        }
+        .field input.has-toggle { padding-right: 70px; }
+
+        .toggle-pw {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--green);
+            font: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .toggle-pw:hover { background: #EEF4EF; }
+
+        .btn-login {
+            width: 100%;
+            height: 52px;
+            margin-top: 6px;
+            border: none;
+            border-radius: 8px;
+            background: var(--green);
+            color: #fff;
+            font: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: .3px;
+            cursor: pointer;
+            transition: background .2s, transform .2s, box-shadow .2s;
+        }
+        .btn-login:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(16, 59, 53, 0.2);
+        }
+
+        .switch {
+            margin-top: 26px;
+            padding-top: 22px;
+            border-top: 1px solid #E2E9E4;
+            text-align: center;
+            color: var(--muted);
+            font-size: 15px;
+        }
+        .switch a {
+            color: var(--green);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .switch a:hover { color: var(--gold-dark); }
+
+        :focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+        /* MOBILE */
+        @media (max-width: 860px) {
+            body { grid-template-columns: 1fr; }
+            .brand-panel { padding: 28px 24px; gap: 26px; }
+            .brand-copy h2 { font-size: 30px; }
+            .brand-copy p, .brand-foot { display: none; }
+            .form-panel { padding: 34px 20px 50px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="brand-panel">
+        <a href="{{ url_for('home') }}" class="brand">
+            <span class="brand-mark">V</span>
+            <span class="brand-text">
+                VOLUNTEER
+                <small>COMMUNITY PORTAL</small>
+            </span>
+        </a>
+
+        <div class="brand-copy">
+            <span class="eyebrow">BUILDING STRONGER COMMUNITIES</span>
+            <h2>Small Acts.<br><span>Lasting Impact.</span></h2>
+            <p>
+                Sign in to find volunteer opportunities, track your hours,
+                and serve your community in Keffi and its environs.
+            </p>
+        </div>
+
+        <div class="brand-foot">
+            © 2026 The Volunteer Community Portal
+        </div>
+    </aside>
+
+    <main class="form-panel">
+        <div class="login-box">
+
+            <a href="{{ url_for('home') }}" class="back-link">← Back to homepage</a>
+
+            <span class="eyebrow">WELCOME BACK</span>
+            <h1>Login to Your Account</h1>
+            <p class="lead">Continue making a difference in your community.</p>
+            <div class="rule"></div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <p class="form-message {{ category }}" role="status">{{ message }}</p>
+                {% endfor %}
+            {% endwith %}
+
+            <form action="{{ url_for('login') }}" method="POST">
+
+                <div class="field">
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" name="email"
+                           placeholder="you@example.com"
+                           autocomplete="email" required>
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password"
+                           class="has-toggle"
+                           placeholder="Enter your password"
+                           autocomplete="current-password" required>
+                    <button type="button" class="toggle-pw" id="togglePw"
+                            style="top: calc(50% + 12px);">Show</button>
+                </div>
+
+                <button type="submit" class="btn-login">Login →</button>
+            </form>
+
+            <p class="switch">
+                Don't have an account yet?
+                <a href="{{ url_for('register') }}">Register here</a>
+            </p>
+
+        </div>
+    </main>
+
+    <script>
+        const pw = document.getElementById("password");
+        const btn = document.getElementById("togglePw");
+        btn.addEventListener("click", () => {
+            const show = pw.type === "password";
+            pw.type = show ? "text" : "password";
+            btn.textContent = show ? "Hide" : "Show";
+        });
+    </script>
+
+</body>
+</html>

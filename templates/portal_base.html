@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portal{% endblock %} | Volunteer Community Portal</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+<div class="dashboard-container">
+
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-hand-holding-heart"></i>
+            <h2>Volunteer<span>Hub</span></h2>
+        </div>
+
+        <p class="menu-title">MENU</p>
+        <nav>
+            <a href="{{ url_for('dashboard') }}"
+               {% if request.endpoint == 'dashboard' %}class="active"{% endif %}>
+                <i class="fas fa-chart-pie"></i> Dashboard
+            </a>
+
+            {% if role == 'volunteer' %}
+            <a href="{{ url_for('profile') }}"
+               {% if request.endpoint == 'profile' %}class="active"{% endif %}>
+                <i class="fas fa-user"></i> My Profile
+            </a>
+            <a href="{{ url_for('hours') }}"
+               {% if request.endpoint == 'hours' %}class="active"{% endif %}>
+                <i class="fas fa-clock"></i> Volunteer Hours
+            </a>
+            <a href="{{ url_for('activities') }}">
+                <i class="fas fa-calendar-alt"></i> Browse Activities
+            </a>
+            {% endif %}
+
+            <a href="{{ url_for('home') }}">
+                <i class="fas fa-globe"></i> Public Website
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="{{ url_for('logout') }}">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h2>{% block heading %}{% endblock %}</h2>
+                <p>{% block subheading %}{% endblock %}</p>
+            </div>
+            <div class="profile">
+                <div class="avatar">{{ name[0]|upper }}</div>
+                <div>
+                    <h4>{{ name }}</h4>
+                    <small>{{ role|capitalize }}</small>
+                </div>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <p class="flash {{ category }}" role="status">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+        <footer>© 2026 Volunteer Community Portal. All Rights Reserved.</footer>
+    </main>
+</div>
+</body>
+</html>

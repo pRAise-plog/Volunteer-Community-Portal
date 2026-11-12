@@ -1,0 +1,24 @@
+VOLUNTEER COMMUNITY PORTAL — SETUP
+
+1. Open this folder in VS Code.
+2. In the terminal run:
+
+   pip install flask
+
+3. Start the site with:
+
+   python app.py
+
+4. Open this address in your browser:
+
+   http://127.0.0.1:5000
+
+Keep the terminal running. Use port 5000, not Live Server port 5500.
+
+The app creates database.db automatically.
+Passwords are hashed.
+
+This is a class-project starter, not production-ready.
+Change SECRET_KEY, disable debug mode, and add CSRF protection before deployment.
+
+The homepage has an image fallback if static/images/community.jpg is missing.

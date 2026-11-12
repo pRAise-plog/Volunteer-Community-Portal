@@ -1,0 +1,35 @@
+{% extends "portal_base.html" %}
+{% block title %}Volunteer Hours{% endblock %}
+{% block heading %}Volunteer Hours{% endblock %}
+{% block subheading %}Hours are added once an organization confirms your attendance.{% endblock %}
+
+{% block content %}
+<section class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon green"><i class="fas fa-clock"></i></div>
+        <h3>{{ total }}</h3><p>Total Verified Hours</p>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon gold"><i class="fas fa-award"></i></div>
+        <h3>{{ rows|length }}</h3><p>Activities Completed</p>
+    </div>
+</section>
+
+<section class="panel">
+    <div class="section-heading"><h2>Attendance History</h2></div>
+    <table class="data-table">
+        <tr><th>Activity</th><th>Organization</th><th>Date</th><th>Location</th><th>Hours</th></tr>
+        {% for r in rows %}
+        <tr>
+            <td>{{ r.title }}</td>
+            <td>{{ r.organization_name }}</td>
+            <td>{{ r.event_date }}</td>
+            <td>{{ r.location }}</td>
+            <td>{{ r.hours }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="empty">No confirmed hours yet. Join an activity and attend it.</td></tr>
+        {% endfor %}
+    </table>
+</section>
+{% endblock %}

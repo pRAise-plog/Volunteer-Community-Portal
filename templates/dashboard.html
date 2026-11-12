@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Volunteer Community Portal{% endblock %}
+
+{% block content %}
+
+<style>
+    .dash-form { display: grid; gap: 12px; margin-top: 16px; }
+    .dash-form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .dash-form textarea { min-height: 90px; }
+    .row-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .row-actions form { margin: 0; }
+    .mini-btn {
+        display: inline-flex; align-items: center; min-height: 38px;
+        padding: 7px 16px; border: 1px solid #D4E1D9; border-radius: 8px;
+        background: #fff; color: #174E46; font: inherit; font-size: 14px;
+        font-weight: 700; cursor: pointer;
+    }
+    .mini-btn:hover { background: #F0F7F2; }
+    .mini-btn.solid { background: #174E46; color: #fff; border-color: #174E46; }
+    .mini-btn.danger { color: #8A2828; border-color: #F2C7C7; }
+    .side-links { display: grid; gap: 10px; margin-top: 14px; }
+
+    /* Hours progress ring */
+    .hours-card { display: flex; align-items: center; gap: 20px; }
+    .ring {
+        --p: 0;
+        width: 104px; height: 104px; flex-shrink: 0;
+        display: grid; place-items: center; border-radius: 50%;
+        background: conic-gradient(#D6B66A calc(var(--p) * 1%), #E8EEEA 0);
+    }
+    .ring-inner {
+        width: 80px; height: 80px; border-radius: 50%; background: #fff;
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center; line-height: 1.1;
+    }
+    .hours-card .ring-inner strong { font-size: 28px; margin: 0; color: #103B35; }
+    .hours-card .ring-inner small { font-size: 12px; color: #687870; margin: 0; }
+    .hours-text span { display: block; font-weight: 700; margin-bottom: 4px; }
+    .hours-text p { margin: 0 0 6px; color: #687870; font-size: 14px; line-height: 1.5; }
+    .hours-text a { color: #174E46; font-size: 14px; font-weight: 700; }
+
+    @media (max-width: 600px) { .dash-form .two { grid-template-columns: 1fr; } }
+</style>
+
+<section class="dashboard-page">
+
+    <div class="dashboard-heading">
+        <div>
+            <span class="eyebrow">YOUR COMMUNITY SPACE</span>
+            <h1>Welcome, {{ session.get('full_name', 'Volunteer') }}.</h1>
+            <p>Here is an overview of your community activity.</p>
+        </div>
+        <span class="role-badge">{{ session.get('role', 'member')|title }} account</span>
+    </div>
+
+    {% if org_status == 'pending' %}
+        <div class="notice dashboard-notice">
+            Your organization account is awaiting administrator approval.
+        </div>
+    {% elif org_status == 'rejected' %}
+        <div class="notice dashboard-notice">
+            Your organization registration was not approved.
+            Please contact the administrator.
+        </div>
+    {% endif %}
+
+
+    {% if session.get('role') == 'volunteer' %}
+
+    <div class="dashboard-stats">
+
+        <article class="dashboard-stat">
+            <span>Activities</span>
+            <strong>{{ stats['activities'] }}</strong>
+            <small>Your sign-ups</small>
+        </article>
+
+        <article class="dashboard-stat hours-card">
+            <div class="ring" style="--p: {{ stats['percent'] }};">
+                <div class="ring-inner">
+                    <strong>{{ stats['hours'] }}</strong>
+                    <small>hours</small>
+                </div>
+            </div>
+            <div class="hours-text">
+                <span>Verified Hours</span>
+                <p>{{ stats['percent'] }}% of your {{ stats['goal'] }}-hour goal.
+                   Hours count once an organization confirms you attended.</p>
+                <a href="{{ url_for('hours') }}">View hours history →</a>
+            </div>
+        </article>
+
+        <article class="dashboard-stat">
+            <span>Completed</span>
+            <strong>{{ stats['completed'] }}</strong>
+            <small>Attended and confirmed</small>
+        </article>
+
+    </div>
+
+    {% else %}
+
+    <div class="dashboard-stats">
+
+        <article class="dashboard-stat">
+            <span>Activities</span>
+            <strong>{{ stats['activities'] }}</strong>
+            <small>
+                {% if session.get('role') == 'admin' %}On the platform
+                {% else %}Activities listed{% endif %}
+            </small>
+        </article>
+
+        <article class="dashboard-stat">
+            <span>Volunteer Hours</span>
+            <strong>{{ stats['hours'] }}</strong>
+            <small>Confirmed attended hours</small>
+        </article>
+
+        <article class="dashboard-stat">
+            <span>Account Type</span>
+            <strong class="stat-role">{{ session.get('role', '')|title }}</strong>
+            <small>Your portal role</small>
+        </article>
+
+    </div>
+
+    {% endif %}
+
+
+    <div class="dashboard-columns">
+
+        <!-- LEFT PANEL -->
+        <section class="dashboard-panel">
+
+            {% if session.get('role') == 'admin' %}
+
+                <span class="eyebrow">ADMINISTRATION</span>
+                <h2>Organizations Awaiting Approval</h2>
+
+                {% for o in pending %}
+                <article class="dashboard-activity">
+                    <div>
+                        <h3>{{ o['organization_name'] }}</h3>
+                        <p>{{ o['contact_person'] }} · {{ o['email'] }}</p>
+                        <p>{{ o['purpose'] or '' }}</p>
+                    </div>
+                    <div class="row-actions">
+                        <form method="POST"
+                              action="{{ url_for('review_organization', org_id=o['user_id'], action='approve') }}">
+                            <button class="mini-btn solid" type="submit">Approve</button>
+                        </form>
+                        <form method="POST"
+                              action="{{ url_for('review_organization', org_id=o['user_id'], action='reject') }}">
+                            <button class="mini-btn danger" type="submit">Reject</button>
+                        </form>
+                    </div>
+                </article>
+                {% else %}
+                <div class="empty-state">
+                    <span>◇</span>
+                    <h3>No pending requests</h3>
+                    <p>New organization registrations will appear here.</p>
+                </div>
+                {% endfor %}
+
+            {% else %}
+
+                <span class="eyebrow">YOUR OVERVIEW</span>
+                <h2>
+                    {% if session.get('role') == 'organization' %}Your Activities
+                    {% else %}Your Registered Activities{% endif %}
+                </h2>
+
+                {% for activity in activities %}
+                <article class="dashboard-activity">
+                    <div>
+                        <span class="category-pill">{{ activity['category'] }}</span>
+                        <h3>{{ activity['title'] }}</h3>
+                        <p>{{ activity['location'] }} · {{ activity['activity_date'] }}</p>
+                    </div>
+
+                    <div class="row-actions">
+                        <span class="status-pill">{{ activity['status']|title }}</span>
+
+                        {% if session.get('role') == 'organization' %}
+                            <a class="mini-btn"
+                               href="{{ url_for('manage_activity', activity_id=activity['id']) }}">Manage →</a>
+                        {% elif activity['status'] == 'registered' %}
+                            <form method="POST"
+                                  action="{{ url_for('leave_activity', activity_id=activity['id']) }}">
+                                <button class="mini-btn danger" type="submit">Leave</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </article>
+                {% else %}
+                <div class="empty-state">
+                    <span>◇</span>
+                    <h3>Nothing here yet</h3>
+                    <p>
+                        {% if session.get('role') == 'organization' %}
+                            Activities you publish will appear here.
+                        {% else %}
+                            Your activities will appear here when you sign up.
+                        {% endif %}
+                    </p>
+                    {% if session.get('role') == 'volunteer' %}
+                    <a class="button button-primary" href="{{ url_for('activities') }}">
+                        Explore Activities
+                    </a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+            {% endif %}
+        </section>
+
+
+        <!-- RIGHT PANEL -->
+        <aside class="dashboard-panel">
+
+            {% if session.get('role') == 'organization' %}
+
+                {% if org_status == 'approved' %}
+                    <span class="eyebrow">PUBLISH</span>
+                    <h2>New Activity</h2>
+
+                    <form method="POST" action="{{ url_for('new_activity') }}" class="dash-form">
+                        <input name="title" placeholder="Activity title" required>
+                        <select name="category">
+                            <option value="education">Education</option>
+                            <option value="cleanup">Environment</option>
+                            <option value="outreach">Community Outreach</option>
+                        </select>
+                        <div class="two">
+                            <input type="date" name="event_date" required>
+                            <input type="time" name="event_time">
+                        </div>
+                        <div class="two">
+                            <input name="location" placeholder="Location (default: Keffi)">
+                            <input type="number" name="hours" min="1" max="24" value="2"
+                                   title="Volunteer hours">
+                        </div>
+                        <textarea name="description" placeholder="What will volunteers do?"></textarea>
+                        <button type="submit" class="button button-primary">Publish Activity</button>
+                    </form>
+                {% else %}
+                    <span class="eyebrow">PUBLISH</span>
+                    <h2>Awaiting Approval</h2>
+                    <p>You can publish activities once an administrator approves your organization.</p>
+                {% endif %}
+
+            {% elif session.get('role') == 'volunteer' %}
+
+                <span class="eyebrow">MAKE A DIFFERENCE</span>
+                <h2>Find Your Next Opportunity</h2>
+                <p>Explore community projects and find a way to help.</p>
+
+                <a class="button button-primary full-button" href="{{ url_for('activities') }}">
+                    Browse Activities →
+                </a>
+
+                <div class="side-links">
+                    <a class="mini-btn" href="{{ url_for('profile') }}">My Profile</a>
+                    <a class="mini-btn" href="{{ url_for('hours') }}">My Volunteer Hours</a>
+                </div>
+
+                <div class="upcoming-list">
+                    <h3>Suggested Activities</h3>
+                    {% for activity in upcoming %}
+                        <div class="upcoming-item">
+                            <strong>{{ activity['title'] }}</strong>
+                            <small>{{ activity['activity_date'] }} · {{ activity['location'] }}</small>
+                        </div>
+                    {% else %}
+                        <p>You've checked out all currently listed activities.</p>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+
+                <span class="eyebrow">ADMINISTRATION</span>
+                <h2>Platform Overview</h2>
+                <p>Approve organizations so they can publish activities for volunteers.</p>
+
+            {% endif %}
+        </aside>
+
+    </div>
+</section>
+
+{% endblock %}

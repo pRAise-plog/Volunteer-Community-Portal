@@ -1,0 +1,665 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home | Volunteer Community Portal
+{% endblock %}
+
+{% block content %}
+
+<!-- ==================================================
+     1. HERO SECTION
+================================================== -->
+
+<section class="hero-section">
+
+    <div class="hero-container">
+
+        <div class="hero-content reveal">
+
+            <span class="eyebrow">
+                TOGETHER, WE CAN MAKE A DIFFERENCE
+            </span>
+
+            <h1>
+                Small Acts.<br>
+                <span>Lasting Impact.</span>
+            </h1>
+
+            <p>
+                Connecting passionate volunteers, organisations
+                and community initiatives to create meaningful
+                change across Keffi and its surrounding communities.
+            </p>
+
+            <div class="hero-actions">
+
+                <a href="{{ url_for('activities') }}"
+                   class="button button-gold">
+                    Explore Activities →
+                </a>
+
+                <a href="#about"
+                   class="button button-outline">
+                    Discover Our Mission
+                </a>
+
+            </div>
+
+            <div class="hero-location">
+
+                <span class="location-icon">⌖</span>
+
+                <div>
+                    <strong>Keffi, Nasarawa State</strong>
+
+                    <small>
+                        Proudly serving our local communities.
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TWO-IMAGE HERO GALLERY -->
+
+        <div class="hero-gallery reveal">
+
+            <!-- LARGE MAIN IMAGE -->
+
+            <div class="hero-main-photo photo-frame">
+
+                <img
+                    src="{{ url_for('static', filename='images/community.jpg') }}"
+                    alt="Volunteers distributing donations to community members"
+                    fetchpriority="high"
+                >
+
+            </div>
+
+        
+
+
+
+
+            
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     2. ABOUT US
+================================================== -->
+
+<section class="about-section section-padding" id="about">
+
+    <div class="section-heading reveal">
+
+        <span class="eyebrow">
+            WELCOME TO OUR COMMUNITY
+        </span>
+
+        <h2>
+            A Better Community<br>
+            <span>Starts With You.</span>
+        </h2>
+
+        <p>
+            The Volunteer Community Portal is a platform
+            designed to connect volunteers, organisations
+            and community initiatives.
+
+            We make it easier for people to discover
+            opportunities, share their skills and contribute
+            towards meaningful community development.
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <!-- VOLUNTEERS -->
+
+        <article class="feature-card reveal">
+
+            <div class="feature-icon">♡</div>
+
+            <span class="card-number">
+                01 · VOLUNTEERS
+            </span>
+
+            <h3>Give Your Time</h3>
+
+            <p>
+                Discover meaningful opportunities, participate
+                in community activities and use your time
+                to make a positive difference in people's lives.
+            </p>
+
+            <a href="{{ url_for('register') }}?role=volunteer">
+                Become a Volunteer →
+            </a>
+
+        </article>
+
+
+        <!-- ORGANISATIONS -->
+
+        <article class="feature-card reveal">
+
+            <div class="feature-icon">◇</div>
+
+            <span class="card-number">
+                02 · ORGANISATIONS
+            </span>
+
+            <h3>Create Opportunities</h3>
+
+            <p>
+                Connect with people who care about your cause.
+                Organisations can register on the platform
+                and bring community initiatives to life.
+            </p>
+
+            <a href="{{ url_for('register') }}?role=organization">
+                Register an Organisation →
+            </a>
+
+        </article>
+
+
+        <!-- COMMUNITY -->
+
+        <article class="feature-card reveal">
+
+            <div class="feature-icon">♧</div>
+
+            <span class="card-number">
+                03 · COMMUNITY
+            </span>
+
+            <h3>Build Stronger Communities</h3>
+
+            <p>
+                Encourage kindness, teamwork and cooperation
+                through activities that support people
+                and improve our local communities.
+            </p>
+
+            <a href="{{ url_for('activities') }}">
+                Explore Activities →
+            </a>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     3. MAKE A DIFFERENCE
+================================================== -->
+
+<section class="activities-section section-padding">
+
+    <div class="section-title-row reveal">
+
+        <div>
+
+            <span class="eyebrow">
+                WHERE YOUR HELP MATTERS
+            </span>
+
+            <h2>
+                Ways to Make a <span>Difference.</span>
+            </h2>
+
+            <p class="section-description">
+                Explore the different areas where volunteers
+                can contribute their time, knowledge and skills.
+            </p>
+
+        </div>
+
+        <a href="{{ url_for('activities') }}"
+           class="section-link">
+            Explore All Activities →
+        </a>
+
+    </div>
+
+
+    <div class="photo-card-grid">
+
+        <!-- ENVIRONMENTAL SERVICES -->
+
+        <article class="photo-card reveal">
+
+            <div class="photo-card-image">
+
+                <img
+                    src="{{ url_for('static', filename='images/nigeria-cleanup.jpg') }}"
+                    alt="Nigerian volunteers cleaning their community"
+                    loading="lazy"
+                >
+
+                <span class="image-label">
+                    ENVIRONMENT
+                </span>
+
+            </div>
+
+            <div class="photo-card-content">
+
+                <span class="card-number">
+                    SERVICE AREA 01
+                </span>
+
+                <h3>Environmental Services</h3>
+
+                <p>
+                    Take part in environmental clean-up,
+                    waste management awareness and community
+                    improvement initiatives.
+
+                    Together, we can create cleaner,
+                    healthier surroundings.
+                </p>
+
+                <a href="{{ url_for('activities') }}">
+                    Explore Opportunities →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- EDUCATION AND LEARNING -->
+
+        <article class="photo-card reveal">
+
+            <div class="photo-card-image">
+
+                <img
+                    src="{{ url_for('static', filename='images/nigerian-education.jpg') }}"
+                    alt="Nigerian schoolchildren learning in a classroom"
+                    loading="lazy"
+                >
+
+                <span class="image-label">
+                    EDUCATION
+                </span>
+
+            </div>
+
+            <div class="photo-card-content">
+
+                <span class="card-number">
+                    SERVICE AREA 02
+                </span>
+
+                <h3>Education & Learning</h3>
+
+                <p>
+                    Support learners through teaching,
+                    mentorship, reading programmes and
+                    basic computer education.
+
+                    Help create opportunities for learning
+                    and personal development.
+                </p>
+
+                <a href="{{ url_for('activities') }}">
+                    Explore Opportunities →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- COMMUNITY OUTREACH AND HOSPITALITY -->
+
+        <article class="photo-card reveal">
+
+            <div class="photo-card-image">
+
+                <img
+                    src="{{ url_for('static', filename='images/nigerian-outreach.jpg') }}"
+                    alt="Nigerian volunteers distributing food and essential supplies"
+                    loading="lazy"
+                >
+
+                <span class="image-label">
+                    HOSPITALITY & COMMUNITY CARE
+                </span>
+
+            </div>
+
+            <div class="photo-card-content">
+
+                <span class="card-number">
+                    SERVICE AREA 03
+                </span>
+
+                <h3>Community Outreach & Hospitality</h3>
+
+                <p>
+                    Welcome people, serve meals, distribute
+                    donated items and support families
+                    and individuals in need.
+
+                    Every act of kindness matters.
+                </p>
+
+                <a href="{{ url_for('activities') }}">
+                    Explore Opportunities →
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     4. HOW THE PORTAL WORKS
+================================================== -->
+
+<section class="how-section section-padding">
+
+    <div class="section-heading reveal">
+
+        <span class="eyebrow">
+            GETTING STARTED IS EASY
+        </span>
+
+        <h2>
+            How Our Portal <span>Works.</span>
+        </h2>
+
+        <p>
+            We make it simple for volunteers and organisations
+            to connect and participate in community development.
+        </p>
+
+    </div>
+
+
+    <div class="steps-grid">
+
+        <article class="step-card reveal">
+
+            <div class="step-number">01</div>
+
+            <h3>Create an Account</h3>
+
+            <p>
+                Register as a volunteer or organisation
+                and complete your profile.
+            </p>
+
+        </article>
+
+
+        <article class="step-card reveal">
+
+            <div class="step-number">02</div>
+
+            <h3>Discover Activities</h3>
+
+            <p>
+                Explore available community activities
+                and find opportunities that match your
+                interests and skills.
+            </p>
+
+        </article>
+
+
+        <article class="step-card reveal">
+
+            <div class="step-number">03</div>
+
+            <h3>Participate & Make Impact</h3>
+
+            <p>
+                Register for activities, contribute
+                your time and help build stronger
+                communities.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     5. CURRENT COMMUNITY OPPORTUNITIES
+================================================== -->
+
+<section class="latest-section section-padding">
+
+    <div class="section-title-row reveal">
+
+        <div>
+
+            <span class="eyebrow">
+                GET INVOLVED
+            </span>
+
+            <h2>
+                Current Community <span>Opportunities.</span>
+            </h2>
+
+            <p class="section-description">
+                Discover activities listed on our platform
+                and find a way to contribute.
+            </p>
+
+        </div>
+
+        <a href="{{ url_for('activities') }}"
+           class="section-link">
+            View All Activities →
+        </a>
+
+    </div>
+
+
+    <div class="latest-grid">
+
+        {% for activity in activities %}
+
+            <article class="latest-card reveal">
+
+                <span class="category-pill">
+                    {{ activity['category'] }}
+                </span>
+
+                <h3>
+                    {{ activity['title'] }}
+                </h3>
+
+                <p>
+                    {{ activity['description'] }}
+                </p>
+
+                <div class="latest-meta">
+
+                    <span>
+                        ⌖ {{ activity['location'] }}
+                    </span>
+
+                    <span>
+                        ◷ {{ activity['activity_date'] }}
+                    </span>
+
+                </div>
+
+                <a href="{{ url_for('activities') }}">
+                    View Activity Details →
+                </a>
+
+            </article>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <h3>New Opportunities Are Coming.</h3>
+
+                <p>
+                    There are currently no activities published.
+                    Please check back for new community opportunities.
+                </p>
+
+                <a href="{{ url_for('activities') }}"
+                   class="button button-primary">
+                    Browse Activities
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     6. OUR LOCATION
+================================================== -->
+
+<section class="location-section">
+
+    <div class="location-content reveal">
+
+        <span class="eyebrow">
+            OUR COMMUNITY, OUR RESPONSIBILITY
+        </span>
+
+        <h2>
+            Rooted in Keffi.<br>
+            <span>Working for a Better Nasarawa.</span>
+        </h2>
+
+        <p>
+            We are focused on bringing volunteers,
+            organisations and community initiatives
+            together across Keffi and its surrounding
+            communities in Nasarawa State, Nigeria.
+        </p>
+
+        <a href="{{ url_for('register') }}"
+           class="button button-gold">
+            Join Our Community →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     7. PHOTO CALL TO ACTION
+================================================== -->
+
+<section class="photo-cta">
+
+    <img
+        class="photo-cta-background"
+        src="{{ url_for('static', filename='images/community.jpg') }}"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+    >
+
+    <div class="photo-cta-overlay"></div>
+
+    <div class="photo-cta-content reveal">
+
+        <span class="eyebrow">
+            YOUR TIME MATTERS
+        </span>
+
+        <h2>
+            You Don't Have to Change<br>
+            the Whole World.
+        </h2>
+
+        <p>
+            Sometimes, making a difference starts with helping
+            one person, supporting one family or joining
+            one community initiative.
+        </p>
+
+        <a href="{{ url_for('register') }}?role=volunteer"
+           class="button button-gold">
+            Become a Volunteer →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     8. FINAL JOIN SECTION
+================================================== -->
+
+<section class="join-section section-padding">
+
+    <div class="join-card reveal">
+
+        <span class="eyebrow">
+            LET'S BUILD SOMETHING GOOD
+        </span>
+
+        <h2>
+            Your Community Needs You.
+        </h2>
+
+        <p>
+            Whether you want to volunteer, share your skills
+            or organise community activities, there is a place
+            for you on our platform.
+        </p>
+
+        <div class="join-actions">
+
+            <a href="{{ url_for('register') }}?role=volunteer"
+               class="button button-primary">
+                Register as a Volunteer
+            </a>
+
+            <a href="{{ url_for('register') }}?role=organization"
+               class="button button-light">
+                Register an Organisation
+            </a>
+
+        </div>
+
+        <small>
+            Organisation registrations require administrator
+            approval before activities can be published.
+        </small>
+
+    </div>
+
+</section>
+
+{% endblock %}

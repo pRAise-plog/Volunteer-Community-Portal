@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register | Volunteer Community Portal
+{% endblock %}
+
+{% block content %}
+
+<section class="form-page">
+
+    <div class="form-card">
+
+        <span class="eyebrow">
+            JOIN OUR COMMUNITY
+        </span>
+
+        <h1>Create Your Account</h1>
+
+        <p class="form-intro">
+            Join local initiatives and help make a difference.
+        </p>
+
+
+        <form method="POST" id="registerForm">
+
+            <label for="role">
+                Account Type *
+            </label>
+
+            <select
+                id="role"
+                name="role"
+                required
+            >
+
+                <option
+                    value="volunteer"
+                    {% if selected_role == 'volunteer' %}
+                        selected
+                    {% endif %}
+                >
+                    Volunteer
+                </option>
+
+                <option
+                    value="organization"
+                    {% if selected_role == 'organization' %}
+                        selected
+                    {% endif %}
+                >
+                    Organization
+                </option>
+
+            </select>
+
+
+            <label for="full_name">
+                Full Name *
+            </label>
+
+            <input
+                id="full_name"
+                name="full_name"
+                type="text"
+                placeholder="Enter your full name"
+                required
+            >
+
+
+            <label for="email">
+                Email Address *
+            </label>
+
+            <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+            >
+
+
+            <label for="password">
+                Password *
+            </label>
+
+            <input
+                id="password"
+                name="password"
+                type="password"
+                minlength="8"
+                placeholder="At least 8 characters"
+                required
+            >
+
+
+            <div id="volunteerFields">
+
+                <div class="field-divider">
+                    Volunteer Profile
+                </div>
+
+                <label for="phone">
+                    Phone Number *
+                </label>
+
+                <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="Your phone number"
+                >
+
+
+                <label for="skills">
+                    Skills
+                </label>
+
+                <textarea
+                    id="skills"
+                    name="skills"
+                    rows="3"
+                    placeholder="e.g. teaching, design, first aid"
+                ></textarea>
+
+
+                <label for="availability">
+                    Availability
+                </label>
+
+                <select
+                    id="availability"
+                    name="availability"
+                >
+
+                    <option value="">
+                        Choose availability
+                    </option>
+
+                    <option>Weekdays</option>
+                    <option>Weekends</option>
+                    <option>Evenings</option>
+                    <option>Flexible</option>
+
+                </select>
+
+            </div>
+
+
+            <div id="organizationFields" hidden>
+
+                <div class="field-divider">
+                    Organization Profile
+                </div>
+
+                <label for="organization_name">
+                    Organization Name *
+                </label>
+
+                <input
+                    id="organization_name"
+                    name="organization_name"
+                    type="text"
+                    placeholder="Organization name"
+                >
+
+
+                <label for="contact_person">
+                    Contact Person *
+                </label>
+
+                <input
+                    id="contact_person"
+                    name="contact_person"
+                    type="text"
+                    placeholder="Representative name"
+                >
+
+
+                <label for="organization_phone">
+                    Organization Phone
+                </label>
+
+                <input
+                    id="organization_phone"
+                    name="organization_phone"
+                    type="tel"
+                    placeholder="Contact phone"
+                >
+
+
+                <label for="purpose">
+                    Organization Purpose
+                </label>
+
+                <textarea
+                    id="purpose"
+                    name="purpose"
+                    rows="3"
+                    placeholder="Describe your community work"
+                ></textarea>
+
+
+                <p class="notice">
+                    Organization accounts require administrator
+                    approval before publishing activities.
+                </p>
+
+            </div>
+
+
+            <button
+                class="button button-primary full-button"
+                type="submit"
+            >
+                Create Account →
+            </button>
+
+        </form>
+
+
+        <p class="form-bottom">
+
+            Already registered?
+
+            <a href="{{ url_for('login') }}">
+                Log in here
+            </a>
+
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
